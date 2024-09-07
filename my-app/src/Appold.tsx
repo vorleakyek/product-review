@@ -21,7 +21,7 @@ type RatingLevel = {
 }
 
 // const productsReview : ProductReview[]= []
-const excellentReview: ProductReview[] = productsReview.filter(review => review.rating === 5);
+const excellentReview : ProductReview[] = productsReview.filter(review => review.rating===5);
 const excellentRating: number = computeRatingLevel(excellentReview);
 const goodReview = productsReview.filter(review => review.rating === 4);
 const goodRating = computeRatingLevel(goodReview);
@@ -34,13 +34,14 @@ const poorRating = computeRatingLevel(poorReview);
 
 
 
-const overallRating: RatingLevel[] = [
+const overallRating : RatingLevel[] = [
   { ratingLevel: "Excellent", percentage: excellentRating, color: "#009933" },
   { ratingLevel: "Good", percentage: goodRating, color: "#33cc33" },
   { ratingLevel: "Average", percentage: averageRating, color: "#ffd966" },
   { ratingLevel: "Below Average", percentage: belowAvgRating, color: "#cc6600" },
   { ratingLevel: "Poor", percentage: poorRating, color: "#ff0000" }
 ]
+
 
 
 function computeRatingLevel(reviewArray: ProductReview[]): number {
@@ -56,9 +57,7 @@ function calculateOverallRating(productsReview: ProductReview[]): number {
   const belowAvgReview = productsReview.filter(review => review.rating === 2).length;
   const poorReview = productsReview.filter(review => review.rating === 1).length;
 
-  const overallRating = ((5 * excellentReview) + (4 * goodReview) + (3 * averageReview) +
-  (2 * belowAvgReview) + poorReview) / productsReview.length;
-
+  const overallRating = ((5 * excellentReview) + (4 * goodReview) + (3 * averageReview) + (2 * belowAvgReview) + poorReview)/productsReview.length;
   return overallRating;
 }
 

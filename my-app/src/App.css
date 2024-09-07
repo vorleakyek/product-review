@@ -48,6 +48,14 @@
   color:rgb(224, 219, 219);
 }
 
+.yellow {
+  color: #ffcc00;
+}
+
+.hidden{
+  display: none;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
