@@ -44,6 +44,11 @@
   flex-basis: 67%;
 }
 
+.flex-basis-one-fifth{
+  flex-basis: 20%;
+}
+
+
 .gray {
   color:rgb(224, 219, 219);
 }
@@ -55,6 +60,25 @@
 .hidden{
   display: none;
 }
+
+
+.avatar {
+  width: 70%;
+  border-radius: 50%;
+}
+
+.center {
+  text-align: center;
+}
+
+.fs-7 {
+  font-size: 0.85rem;
+}
+
+.fs-8 {
+  font-size: 0.65rem;
+}
+
 
 @keyframes App-logo-spin {
   from {

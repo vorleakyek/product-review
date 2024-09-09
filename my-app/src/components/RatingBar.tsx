@@ -23,6 +23,7 @@ export default function RatingBar({ text, percentage, color }: RatingBarProps) {
           {percentage ? Math.round(percentage) : 0}%
         </div>
       </div>
+
     </>
   )
 }

@@ -1,10 +1,14 @@
 import React from 'react';
-import { BsStarFill } from 'react-icons/bs';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 import './App.css';
 import productsReview from './data/product-reviews.json';
+import users from './data/users.json';
 
 import RatingBar from './components/RatingBar';
+import Review from './components/Review';
+import Stars from './components/Stars';
+// import { Button } from 'react-bootstrap';
 
 type ProductReview = {
   product_id: string;
@@ -20,16 +24,27 @@ type RatingLevel = {
   color: string;
 }
 
+const usersReviewData = productsReview.map(review => {
+  const user = users.find(user => user.user_id === review.user_id);
+
+  return {
+    ...review,
+    userName: user?.name,
+    avartarUrl: user ? user.avatar_url : null
+  };
+});
+
 // const productsReview : ProductReview[]= []
-const excellentReview: ProductReview[] = productsReview.filter(review => review.rating === 5);
+const voyagerHoodieReview = usersReviewData.filter(productReview => productReview.product_id === 'voyager-hoodie');
+const excellentReview: ProductReview[] = voyagerHoodieReview.filter(review => review.rating === 5);
 const excellentRating: number = computeRatingLevel(excellentReview);
-const goodReview = productsReview.filter(review => review.rating === 4);
+const goodReview = voyagerHoodieReview.filter(review => review.rating === 4);
 const goodRating = computeRatingLevel(goodReview);
-const averageReview = productsReview.filter(review => review.rating === 3);
+const averageReview = voyagerHoodieReview.filter(review => review.rating === 3);
 const averageRating = computeRatingLevel(averageReview);
-const belowAvgReview = productsReview.filter(review => review.rating === 2);
+const belowAvgReview = voyagerHoodieReview.filter(review => review.rating === 2);
 const belowAvgRating = computeRatingLevel(belowAvgReview);
-const poorReview = productsReview.filter(review => review.rating === 1);
+const poorReview = voyagerHoodieReview.filter(review => review.rating === 1);
 const poorRating = computeRatingLevel(poorReview);
 
 
@@ -41,6 +56,11 @@ const overallRating: RatingLevel[] = [
   { ratingLevel: "Below Average", percentage: belowAvgRating, color: "#cc6600" },
   { ratingLevel: "Poor", percentage: poorRating, color: "#ff0000" }
 ]
+
+
+
+
+console.log(voyagerHoodieReview)
 
 
 function computeRatingLevel(reviewArray: ProductReview[]): number {
@@ -62,8 +82,8 @@ function calculateOverallRating(productsReview: ProductReview[]): number {
   return overallRating;
 }
 
-const reviewNumber = productsReview.length;
-const overallRatingNumber = calculateOverallRating(productsReview);
+const reviewNumber = voyagerHoodieReview.length;
+const overallRatingNumber = calculateOverallRating(voyagerHoodieReview);
 // const overallRatingNumber = 4.;
 const overallRatingString = reviewNumber === 0 ? 0 : overallRatingNumber.toFixed(1);
 
@@ -73,15 +93,9 @@ function App() {
       <div className='d-flex'>
         <div className='flex-basis-full'>
           <h1>Overall Rating</h1>
-          <div className=''>
+          <div>
             <span className="fw-bold me-2">{overallRatingString}</span>
-
-            {['star1', 'star2', 'star3', 'star4', 'star5'].map((star, index) =>
-              <BsStarFill
-                className={`me-2 ${index < overallRatingNumber - 1 ? 'yellow' : 'gray'} mb-1`}
-                key={star}
-              />)}
-
+            < Stars overallRatingNumber={overallRatingNumber}/>
             <span className={reviewNumber === 0 ? 'hidden' : ''}>Based on {reviewNumber} reviews</span>
           </div>
         </div>
@@ -89,6 +103,21 @@ function App() {
       <div className='my-4'>
         {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} />))}
       </div>
+      <div className='d-flex justify-content-center mb-4'>
+        <div className='flex-basis-two-third center'>
+          <Button variant="light">Write a review</Button>
+        </div>
+      </div>
+      <div>
+        <Review />
+      </div>
+
+      <div className='mt-4'>
+        <div className='center'>
+          <Button variant="light">Show 10 more reviews</Button>
+        </div>
+      </div>
+
     </div>
   );
 }
