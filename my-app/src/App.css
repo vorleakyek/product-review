@@ -61,10 +61,33 @@
   display: none;
 }
 
+.avatar-container {
+  width: 60%;          /* 30% of the parent div */
+  aspect-ratio: 1;     /* Ensures a perfect square */
+  border-radius: 50%;  /* Makes it a circle */
+  overflow: hidden;    /* Hides any overflow to maintain the circular shape */
+}
 
 .avatar {
-  width: 70%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  background-color: lightskyblue;
+}
+
+.avatar p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: teal;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .center {
@@ -78,7 +101,6 @@
 .fs-8 {
   font-size: 0.65rem;
 }
-
 
 @keyframes App-logo-spin {
   from {

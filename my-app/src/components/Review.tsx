@@ -1,22 +1,54 @@
 import Stars from './Stars';
+import type { ProductReview } from '../App';
 
-export default function Review () {
+export type Users = {
+  userName: string;
+  avartarUrl: string | null;
+}
+
+export type ReviewDataProps = {
+  usersReviewData : ProductReview & Users;
+}
+
+export default function Review({ usersReviewData }: ReviewDataProps) {
+
+  const date = new Date(usersReviewData.created_at);
+  const formatedDate = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  function getInitials(name: string) {
+    const nameParts = name.split(' ');
+    const initials = nameParts.map((part: string) => part[0]).join('');
+    return initials.toLocaleUpperCase();
+  }
+
+
+  const profileImage = usersReviewData.avartarUrl ? <img className="avatar" src={ usersReviewData.avartarUrl} alt='avatar' /> :
+    <div className='avatar flex'><p>{getInitials(usersReviewData.userName)}</p></div>
+
   return (
     <>
       <div className="d-flex">
         <div className="flex-basis-one-fifth">
-          <img className="avatar" src="https://vaqybtnqyonvlwtskzmv.supabase.co/storage/v1/object/public/e-commerce-track-images/user-avatars/kimberly-mastrangelo.jpg" alt="" />
+          <div className='avatar-container'>
+            {profileImage}
+
+          </div>
+
         </div>
         <div className="flex-basis-half">
-          <p className='mb-1 fw-bold fs-6'>Lilia McKnight</p>
-          <Stars overallRatingNumber={3} />
+          <p className='mb-1 fw-bold fs-6'>{usersReviewData.userName}</p>
+          <Stars overallRatingNumber={usersReviewData.rating} />
         </div>
         <div>
-          <p className='fs-7'>March 11, 2024</p>
+          <p className='fs-7'>{formatedDate}</p>
         </div>
       </div>
       <div className='my-2'>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        <p>{usersReviewData.content}</p>
       </div>
     </>
   )

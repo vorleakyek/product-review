@@ -8,9 +8,9 @@ import users from './data/users.json';
 import RatingBar from './components/RatingBar';
 import Review from './components/Review';
 import Stars from './components/Stars';
-// import { Button } from 'react-bootstrap';
+import ReviewPagenation from './components/ReviewPagenation';
 
-type ProductReview = {
+export type ProductReview = {
   product_id: string;
   user_id: string;
   rating: number;
@@ -29,7 +29,7 @@ const usersReviewData = productsReview.map(review => {
 
   return {
     ...review,
-    userName: user?.name,
+    userName: user!.name,
     avartarUrl: user ? user.avatar_url : null
   };
 });
@@ -109,7 +109,8 @@ function App() {
         </div>
       </div>
       <div>
-        <Review />
+        <ReviewPagenation usersReviewData = {usersReviewData} />
+
       </div>
 
       <div className='mt-4'>
