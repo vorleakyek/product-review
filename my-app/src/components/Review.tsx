@@ -43,8 +43,8 @@ export default function Review({ usersReviewData }: ReviewDataProps) {
           <p className='mb-1 fw-bold fs-6'>{usersReviewData.userName}</p>
           <Stars overallRatingNumber={usersReviewData.rating} />
         </div>
-        <div>
-          <p className='fs-7'>{formatedDate}</p>
+        <div className='flex-basis-third'>
+          <p className='fs-7 right'>{formatedDate}</p>
         </div>
       </div>
       <div className='my-2'>

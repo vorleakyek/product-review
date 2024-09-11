@@ -1,6 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import './App.css';
 import productsReview from './data/product-reviews.json';
 import users from './data/users.json';
@@ -36,8 +35,8 @@ const usersReviewData = productsReview.map(review => {
 
 // const productsReview : ProductReview[]= []
 const voyagerHoodieReview = usersReviewData.filter(productReview => productReview.product_id === 'voyager-hoodie');
-const excellentReview: ProductReview[] = voyagerHoodieReview.filter(review => review.rating === 5);
-const excellentRating: number = computeRatingLevel(excellentReview);
+const excellentReview = voyagerHoodieReview.filter(review => review.rating === 5);
+const excellentRating = computeRatingLevel(excellentReview);
 const goodReview = voyagerHoodieReview.filter(review => review.rating === 4);
 const goodRating = computeRatingLevel(goodReview);
 const averageReview = voyagerHoodieReview.filter(review => review.rating === 3);
@@ -56,12 +55,6 @@ const overallRating: RatingLevel[] = [
   { ratingLevel: "Below Average", percentage: belowAvgRating, color: "#cc6600" },
   { ratingLevel: "Poor", percentage: poorRating, color: "#ff0000" }
 ]
-
-
-
-
-console.log(voyagerHoodieReview)
-
 
 function computeRatingLevel(reviewArray: ProductReview[]): number {
   const numberOfRatings = reviewArray.length;
@@ -84,10 +77,28 @@ function calculateOverallRating(productsReview: ProductReview[]): number {
 
 const reviewNumber = voyagerHoodieReview.length;
 const overallRatingNumber = calculateOverallRating(voyagerHoodieReview);
-// const overallRatingNumber = 4.;
 const overallRatingString = reviewNumber === 0 ? 0 : overallRatingNumber.toFixed(1);
 
 function App() {
+
+  const [data, setData] = useState('all');
+
+  const filteredUsersData = function (ratingDescription: string) {
+    if (ratingDescription === 'Excellent') {
+      return excellentReview
+    } else if (ratingDescription === 'Good') {
+      return goodReview
+    } else if (ratingDescription === 'Average') {
+      return averageReview
+    } else if (ratingDescription === 'Below Average') {
+      return belowAvgReview
+    } else if (ratingDescription === 'Poor') {
+      return poorReview
+    } else if (ratingDescription === 'all') {
+      return voyagerHoodieReview
+    }
+  }
+
   return (
     <div className='m-3'>
       <div className='d-flex'>
@@ -101,24 +112,11 @@ function App() {
         </div>
       </div>
       <div className='my-4'>
-        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} />))}
-      </div>
-      <div className='d-flex justify-content-center mb-4'>
-        <div className='flex-basis-two-third center'>
-          <Button variant="light">Write a review</Button>
-        </div>
+        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData}/>))}
       </div>
       <div>
-        <ReviewPagenation usersReviewData = {usersReviewData} />
-
+        <ReviewPagenation usersReviewData={filteredUsersData(data)!} />
       </div>
-
-      <div className='mt-4'>
-        <div className='center'>
-          <Button variant="light">Show 10 more reviews</Button>
-        </div>
-      </div>
-
     </div>
   );
 }
