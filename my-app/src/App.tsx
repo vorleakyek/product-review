@@ -82,6 +82,7 @@ function App() {
 
   const [data, setData] = useState('all');
   const [pageSize, setPageSize] = useState(10);
+  const [activeBar, setActiveBar] = useState<string | null>(null);
 
   const filteredUsersData = function (ratingDescription: string) {
     if (ratingDescription === 'Excellent') {
@@ -112,7 +113,7 @@ function App() {
         </div>
       </div>
       <div className='my-4'>
-        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData} pageSize={10} setPageSize={setPageSize}/>))}
+        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData} pageSize={10} setPageSize={setPageSize} isActive={activeBar === review.ratingLevel} setActiveBar={setActiveBar}/>))}
       </div>
       <div>
         <ReviewPagenation usersReviewData={filteredUsersData(data)!} pageSize={pageSize} setPageSize={setPageSize} />
