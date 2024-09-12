@@ -5,7 +5,6 @@ import productsReview from './data/product-reviews.json';
 import users from './data/users.json';
 
 import RatingBar from './components/RatingBar';
-import Review from './components/Review';
 import Stars from './components/Stars';
 import ReviewPagenation from './components/ReviewPagenation';
 
@@ -82,6 +81,7 @@ const overallRatingString = reviewNumber === 0 ? 0 : overallRatingNumber.toFixed
 function App() {
 
   const [data, setData] = useState('all');
+  const [pageSize, setPageSize] = useState(10);
 
   const filteredUsersData = function (ratingDescription: string) {
     if (ratingDescription === 'Excellent') {
@@ -112,10 +112,10 @@ function App() {
         </div>
       </div>
       <div className='my-4'>
-        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData}/>))}
+        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData} pageSize={10} setPageSize={setPageSize}/>))}
       </div>
       <div>
-        <ReviewPagenation usersReviewData={filteredUsersData(data)!} />
+        <ReviewPagenation usersReviewData={filteredUsersData(data)!} pageSize={pageSize} setPageSize={setPageSize} />
       </div>
     </div>
   );

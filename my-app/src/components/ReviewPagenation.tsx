@@ -10,11 +10,11 @@ export type Users = {
 
 export type ReviewDataProps = {
   usersReviewData: Array<ProductReview & Users>;
+  pageSize: number;
+  setPageSize: any;
 }
 
-export default function ReviewPagenation({ usersReviewData }: ReviewDataProps ) {
-
-  const [pageSize,setPageSize] = useState(10)
+export default function ReviewPagenation({ usersReviewData, pageSize, setPageSize }: ReviewDataProps ) {
 
   const sortByLatest = usersReviewData.sort((a,b)=>new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   let hiddenReview = sortByLatest.length - pageSize;
