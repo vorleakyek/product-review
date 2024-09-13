@@ -1,5 +1,4 @@
 import Review from "./Review"
-import {useState} from "react"
 import Button from 'react-bootstrap/Button';
 import type { ProductReview } from '../App';
 
@@ -31,8 +30,11 @@ export default function ReviewPagenation({ usersReviewData, pageSize, setPageSiz
     <>
       <div className='d-flex justify-content-center mb-4'>
         <div className='flex-basis-two-third center hidden'>
-          <Button variant="light">Write a review</Button>
+          <Button variant="light" disabled>Write a review</Button>
         </div>
+      </div>
+      <div>
+        <h3>Reviews</h3>
       </div>
       {sortByLatest.slice(0,pageSize).map(review => <Review key={review.userName + Math.random()} usersReviewData={review} />)}
       <div className='mt-4'>

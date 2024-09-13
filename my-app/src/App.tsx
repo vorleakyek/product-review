@@ -3,10 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import productsReview from './data/product-reviews.json';
 import users from './data/users.json';
+import Button from 'react-bootstrap/Button';
+
 
 import RatingBar from './components/RatingBar';
 import Stars from './components/Stars';
 import ReviewPagenation from './components/ReviewPagenation';
+import EmptyReview from './components/EmptyReview';
 
 export type ProductReview = {
   product_id: string;
@@ -100,6 +103,11 @@ function App() {
     }
   }
 
+  function resetDataAndActiveBar() {
+    setActiveBar(null);
+    setData('all');
+  }
+
   return (
     <div className='m-3'>
       <div className='d-flex'>
@@ -115,8 +123,15 @@ function App() {
       <div className='my-4'>
         {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData} pageSize={10} setPageSize={setPageSize} isActive={activeBar === review.ratingLevel} setActiveBar={setActiveBar}/>))}
       </div>
+      <div className={activeBar ? '': 'hidden'}>
+        <Button variant="warning filter" size="sm" onClick={resetDataAndActiveBar}>
+          Clear filter
+        </Button>
+      </div>
       <div>
-        <ReviewPagenation usersReviewData={filteredUsersData(data)!} pageSize={pageSize} setPageSize={setPageSize} />
+        {
+          filteredUsersData(data)!.length === 0 ? <EmptyReview /> : <ReviewPagenation usersReviewData={filteredUsersData(data)!} pageSize={pageSize} setPageSize={setPageSize} />
+        }
       </div>
     </div>
   );

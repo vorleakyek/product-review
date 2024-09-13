@@ -1,6 +1,3 @@
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import { useState } from 'react';
-
 type RatingBarProps = {
   text: string;
   percentage: number;
@@ -36,6 +33,7 @@ export default function RatingBar({ text, percentage, color, setData, setPageSiz
           {percentage ? Math.round(percentage) : 0}%
         </div>
       </div>
+
 
     </>
   )
