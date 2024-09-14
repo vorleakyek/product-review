@@ -35,7 +35,6 @@ const usersReviewData = productsReview.map(review => {
   };
 });
 
-// const productsReview : ProductReview[]= []
 const voyagerHoodieReview = usersReviewData.filter(productReview => productReview.product_id === 'voyager-hoodie');
 const excellentReview = voyagerHoodieReview.filter(review => review.rating === 5);
 const excellentRating = computeRatingLevel(excellentReview);
@@ -72,7 +71,7 @@ function calculateOverallRating(productsReview: ProductReview[]): number {
   const poorReview = productsReview.filter(review => review.rating === 1).length;
 
   const overallRating = ((5 * excellentReview) + (4 * goodReview) + (3 * averageReview) +
-  (2 * belowAvgReview) + poorReview) / productsReview.length;
+    (2 * belowAvgReview) + poorReview) / productsReview.length;
 
   return overallRating;
 }
@@ -106,33 +105,36 @@ function App() {
   function resetDataAndActiveBar() {
     setActiveBar(null);
     setData('all');
+    setPageSize(10);
   }
 
   return (
-    <div className='m-3'>
-      <div className='d-flex'>
-        <div className='flex-basis-full'>
+    <div className='container'>
+      <div className='row flex-basis-full'>
+        <div className='flex-basis-full flex-basis-half'>
           <h1>Overall Rating</h1>
           <div>
             <span className="fw-bold me-2">{overallRatingString}</span>
-            < Stars overallRatingNumber={overallRatingNumber}/>
+            <Stars overallRatingNumber={overallRatingNumber} />
             <span className={reviewNumber === 0 ? 'hidden' : ''}>Based on {reviewNumber} reviews</span>
           </div>
+          <div className='my-4'>
+            {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData} pageSize={10} setPageSize={setPageSize} isActive={activeBar === review.ratingLevel} setActiveBar={setActiveBar} />))}
+          </div>
+          <div className={activeBar ? '' : 'hidden'}>
+            <Button variant="warning filter" size="sm" onClick={resetDataAndActiveBar}>
+              Clear filter
+            </Button>
+          </div>
+        </div>
+        <div className='flex-basis-full flex-basis-half'>
+          {
+            filteredUsersData(data)!.length === 0 ? <EmptyReview /> : <ReviewPagenation usersReviewData={filteredUsersData(data)!} pageSize={pageSize} setPageSize={setPageSize} />
+          }
         </div>
       </div>
-      <div className='my-4'>
-        {overallRating.map((review) => (<RatingBar key={review.ratingLevel} text={review.ratingLevel} percentage={review.percentage} color={review.color} setData={setData} pageSize={10} setPageSize={setPageSize} isActive={activeBar === review.ratingLevel} setActiveBar={setActiveBar}/>))}
-      </div>
-      <div className={activeBar ? '': 'hidden'}>
-        <Button variant="warning filter" size="sm" onClick={resetDataAndActiveBar}>
-          Clear filter
-        </Button>
-      </div>
-      <div>
-        {
-          filteredUsersData(data)!.length === 0 ? <EmptyReview /> : <ReviewPagenation usersReviewData={filteredUsersData(data)!} pageSize={pageSize} setPageSize={setPageSize} />
-        }
-      </div>
+
+
     </div>
   );
 }

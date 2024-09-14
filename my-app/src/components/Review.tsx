@@ -39,7 +39,7 @@ export default function Review({ usersReviewData }: ReviewDataProps) {
           </div>
 
         </div>
-        <div className="flex-basis-half">
+        <div className="flex-basis-half ps-0">
           <p className='mb-1 fw-bold fs-6'>{usersReviewData.userName}</p>
           <Stars overallRatingNumber={usersReviewData.rating} />
         </div>

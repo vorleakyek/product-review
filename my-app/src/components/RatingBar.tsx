@@ -20,7 +20,7 @@ export default function RatingBar({ text, percentage, color, setData, setPageSiz
   return (
     <>
       <div className='d-flex align-items-end'>
-        <div className='flex-basis-two-third'>
+        <div className='flex-basis-third'>
           {text}
         </div>
         <div className='flex-basis-two-third' onClick={()=>updateTextAndPageSize(text,pageSize)}>
